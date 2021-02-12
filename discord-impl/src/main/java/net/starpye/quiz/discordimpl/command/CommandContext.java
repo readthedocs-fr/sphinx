@@ -8,9 +8,9 @@ import net.starpye.quiz.discordimpl.game.LobbyList;
 
 public class CommandContext {
 
-    private MessageContext messageContext;
-    private GameList gameList;
-    private LobbyList lobbyList;
+    private final MessageContext messageContext;
+    private final GameList gameList;
+    private final LobbyList lobbyList;
 
     public CommandContext(MessageContext messageContext, GameList gameList, LobbyList lobbyList) {
         this.messageContext = messageContext;
@@ -44,10 +44,10 @@ public class CommandContext {
 
     public static class MessageContext {
 
-        private TextChannel textChannel;
-        private Message message;
-        private Member author;
-        private String[] args;
+        private final TextChannel textChannel;
+        private final Message message;
+        private final Member author;
+        private final String[] args;
 
         public MessageContext(TextChannel textChannel, Message message, Member author, String[] args) {
             this.textChannel = textChannel;

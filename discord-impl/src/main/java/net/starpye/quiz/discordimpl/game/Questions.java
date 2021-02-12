@@ -27,9 +27,9 @@ public class Questions {
                                 "Content of integration: rho(r, theta, phi)", "false")*/
         );
 
-        private String question;
-        private String textAnswer;
-        private UUID uuid;
+        private final String question;
+        private final String textAnswer;
+        private final UUID uuid;
 
         public MockQuestion(String question, String answer) {
             this.question = question;

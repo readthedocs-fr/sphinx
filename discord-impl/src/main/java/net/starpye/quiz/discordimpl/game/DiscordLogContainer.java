@@ -11,7 +11,7 @@ import java.util.Set;
 public class DiscordLogContainer implements LogContainer {
 
     private final Set<Snowflake> logs;
-    private TextChannel channel;
+    private final TextChannel channel;
 
     public DiscordLogContainer(TextChannel channel) {
         this.channel = channel;

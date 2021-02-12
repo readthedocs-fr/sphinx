@@ -4,19 +4,15 @@ package net.starpye.quiz.discordimpl.command;
 import discord4j.core.object.entity.Attachment;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.TextChannel;
-import io.netty.buffer.ByteBufInputStream;
 import net.starpye.quiz.discordimpl.util.InputUtils;
 import net.starype.quiz.api.database.*;
-import scala.util.control.Exception.By;
 
-import java.io.*;
-import java.net.URL;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public class GenerateDatabaseCommand implements QuizCommand {
 

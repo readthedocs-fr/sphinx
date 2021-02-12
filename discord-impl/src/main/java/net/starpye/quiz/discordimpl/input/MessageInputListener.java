@@ -22,9 +22,9 @@ public class MessageInputListener implements Consumer<MessageCreateEvent> {
 
     public static final String PREFIX = "?";
 
-    private Collection<? extends QuizCommand> commands;
-    private LobbyList lobbyList;
-    private GameList gameList;
+    private final Collection<? extends QuizCommand> commands;
+    private final LobbyList lobbyList;
+    private final GameList gameList;
 
     public MessageInputListener(LobbyList lobbyList, GameList gameList) {
         this.lobbyList = lobbyList;

@@ -13,7 +13,7 @@ import java.util.function.Predicate;
 
 public class ReactionInputListener implements Consumer<ReactionAddEvent> {
 
-    private Map<TriggerCondition, Consumer<ReactionContext>> callBacks;
+    private final Map<TriggerCondition, Consumer<ReactionContext>> callBacks;
 
     public ReactionInputListener() {
         this.callBacks = new HashMap<>();
@@ -72,9 +72,9 @@ public class ReactionInputListener implements Consumer<ReactionAddEvent> {
 
     public static class TriggerCondition {
 
-        private Snowflake messageId;
-        private String rawReaction;
-        private boolean removeReaction;
+        private final Snowflake messageId;
+        private final String rawReaction;
+        private final boolean removeReaction;
 
         public TriggerCondition(Snowflake messageId, String rawReaction, boolean removeReaction) {
             this.messageId = messageId;
@@ -93,8 +93,8 @@ public class ReactionInputListener implements Consumer<ReactionAddEvent> {
 
     public static class ReactionContext {
 
-        private Snowflake userId;
-        private String userName;
+        private final Snowflake userId;
+        private final String userName;
 
         public ReactionContext(Snowflake userId, String userName) {
             this.userId = userId;

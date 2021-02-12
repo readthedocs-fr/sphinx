@@ -13,9 +13,9 @@ import java.util.Set;
 
 public class DiscordQuizGame extends SimpleGame<DiscordQuizGame> {
 
-    private Set<Snowflake> votesForNext;
-    private Snowflake authorId;
-    private LogContainer container;
+    private final Set<Snowflake> votesForNext;
+    private final Snowflake authorId;
+    private final LogContainer container;
 
     public DiscordQuizGame(
             Queue<? extends GameRound> rounds,

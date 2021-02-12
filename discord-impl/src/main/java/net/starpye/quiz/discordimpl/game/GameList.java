@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class GameList {
 
-    private Map<DiscordQuizGame, ScheduledFuture<?>> ongoingGames;
+    private final Map<DiscordQuizGame, ScheduledFuture<?>> ongoingGames;
 
     public GameList() {
         this.ongoingGames = new HashMap<>();
