@@ -26,7 +26,7 @@ public class ForceNextRoundCommand implements QuizCommand {
         DiscordQuizGame game = gameList.getFromPlayer(playerId).get();
         game.addLog(message.getId());
         game.nextRound();
-        message.addReaction(ReactionEmoji.unicode("\uD83D\uDC4D")).block();
+        message.addReaction(ReactionEmoji.unicode("\uD83D\uDC4D")).subscribe();
     }
 
     public static Map<Supplier<Boolean>, String> createStopConditions(GameList gameList, Snowflake authorId) {

@@ -22,7 +22,7 @@ public class LeaveCommand implements QuizCommand {
             return;
         }
         gameList.getFromPlayer(authorId).get().removePlayer(authorId);
-        channel.createMessage("Successfully left the game").block();
+        channel.createMessage("Successfully left the game").subscribe();
     }
 
     private static Map<Supplier<Boolean>, String> createStopConditions(GameList gameList, Snowflake authorId) {

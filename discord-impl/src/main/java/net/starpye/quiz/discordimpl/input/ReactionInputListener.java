@@ -57,8 +57,8 @@ public class ReactionInputListener implements Consumer<ReactionAddEvent> {
         if (condition.removeReaction) {
             reactionAddEvent
                     .getMessage()
-                    .blockOptional()
-                    .ifPresent(message -> message.removeReaction(reactionAddEvent.getEmoji(), userId).block());
+                    .flatMap(message -> message.removeReaction(reactionAddEvent.getEmoji(), userId))
+                    .subscribe();
         }
     }
 

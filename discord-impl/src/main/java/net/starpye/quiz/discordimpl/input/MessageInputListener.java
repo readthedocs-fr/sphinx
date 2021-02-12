@@ -8,6 +8,9 @@ import net.starpye.quiz.discordimpl.command.*;
 import net.starpye.quiz.discordimpl.command.CommandContext.MessageContext;
 import net.starpye.quiz.discordimpl.game.GameList;
 import net.starpye.quiz.discordimpl.game.LobbyList;
+import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
+import reactor.util.function.Tuples;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -41,12 +44,18 @@ public class MessageInputListener implements Consumer<MessageCreateEvent> {
         String[] args = content.split(" ");
 
         Optional<? extends QuizCommand> optCommand = findByName(args[0].replace(PREFIX, ""));
-        optCommand.ifPresent(command -> processCommand(
-                command,
-                message.getChannel().cast(TextChannel.class).block(),
-                message,
-                event.getMember().get(), // Optional guaranteed to be present because of the filter
-                args));
+        message.getChannel()
+                .cast(TextChannel.class)
+                .map(channel -> Tuples.of(channel, optCommand))
+                .filter(tuple -> tuple.getT2().isPresent())
+                .map(tuple -> Tuples.of(tuple.getT1(), tuple.getT2().get()))
+                .subscribe(tuple -> processCommand(
+                        tuple.getT2(),
+                        tuple.getT1(),
+                        message,
+                        event.getMember().get(), // Optional guaranteed to be present because of the filter
+                        args)
+                );
     }
 
     private void processCommand(QuizCommand command, TextChannel channel, Message message, Member member, String... args) {

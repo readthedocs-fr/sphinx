@@ -32,10 +32,6 @@ public class DiscordLogContainer implements LogContainer {
     }
 
     private void deleteLog(Snowflake id) {
-        Optional<Message> optMessage = channel.getMessageById(id).blockOptional();
-        if(optMessage.isEmpty()) {
-            return;
-        }
-        optMessage.get().delete().subscribe();
+        channel.getMessageById(id).subscribe(Message::delete);
     }
 }
