@@ -37,10 +37,10 @@ class CalcLexer extends RegexParsers {
     rep1(this.parseNumber | this.parseOperator | this.parseOperator | this.parseKeyword | this.parseFunctionIdentifier)
   }
 
-  def apply(input: String): List[CalcToken] = {
+  def apply(input: String): Option[List[CalcToken]] = {
     parse(this.parseTokens, input) match {
-      case NoSuccess(msg, _) => println(msg); null
-      case Success(result, _) => result
+      case NoSuccess(_, _) => Option.empty
+      case Success(result, _) => Option(result)
     }
   }
 

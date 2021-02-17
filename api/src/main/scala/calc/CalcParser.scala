@@ -14,7 +14,7 @@ class CalcParser extends Parsers {
 
   private def parseLiteral: Parser[CalcLiteral] = parseFloat | parseInteger
 
-  private def parseGrouping: Parser[CalcExpression] = LeftParen ~ parseExpression ~ RightParen ^^ { case _ ~ expression ~ _ => expression }
+  private def parseGrouping: Parser[CalcExpression] = LeftParen ~> parseExpression <~ RightParen
 
   private def parseArgs: Parser[List[CalcExpression]] = LeftParen ~> repsep(parseExpression, Comma) <~ RightParen
 
@@ -36,11 +36,11 @@ class CalcParser extends Parsers {
 
   private def parseExpression: Parser[CalcExpression] = parseBinary | parseUnary | parseFunctionCall | parseLiteral | parseGrouping
 
-  def apply(tokens: Seq[CalcToken]): CalcExpression = {
+  def apply(tokens: Seq[CalcToken]): Option[CalcExpression] = {
     val reader = new CalcTokenReader(tokens)
     parseExpression.apply(reader) match {
-      case NoSuccess(msg, _) => println(msg); null
-      case Success(result, _) => result
+      case NoSuccess(_, _) => Option.empty
+      case Success(result, _) => Option(result)
     }
   }
 }

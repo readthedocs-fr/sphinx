@@ -9,34 +9,44 @@ class CalcEvaluator {
     }
   }
 
-  def evalFunctionCall(name: ASTFunctionId, args: List[CalcExpression]): Number = {
+  def evalFunctionCall(name: ASTFunctionId, args: List[CalcExpression]): Option[Number] = {
     name.value match {
-      case "log" => Math.log(this.evalCalcExpression(args.head).doubleValue())
-      case _ => throw CalcRuntimeError(s"Unknow function ${name.value}")
+      case "log" => Option(Math.log(this.evalCalcExpression(args.head) match {
+        case Some(value) => value.doubleValue()
+        case None => return Option.empty
+      }))
+      case _ => Option.empty
     }
   }
 
   //TODO: re-think about .floatValue() because it transform '5+3' in '8.0' in example.
-  def evalBinaryExpression(leftExpression: CalcExpression, operator: CalcOperator, rightExpression: CalcExpression): Number = {
+  def evalBinaryExpression(leftExpression: CalcExpression, operator: CalcOperator, rightExpression: CalcExpression): Option[Number] = {
+    val leftOptLit = this.evalCalcExpression(leftExpression)
+    val rightOptLit = this.evalCalcExpression(rightExpression)
+    if (leftOptLit.isEmpty || rightOptLit.isEmpty) Option.empty
+    val leftLit = leftOptLit.get
+    val rightLit = rightOptLit.get
     operator match {
-      case Plus => this.evalCalcExpression(leftExpression).floatValue() + this.evalCalcExpression(rightExpression).floatValue()
-      case Minus => this.evalCalcExpression(leftExpression).floatValue() - this.evalCalcExpression(rightExpression).floatValue()
-      case Mul => this.evalCalcExpression(leftExpression).floatValue() * this.evalCalcExpression(rightExpression).floatValue()
-      case Div => this.evalCalcExpression(leftExpression).floatValue() / this.evalCalcExpression(rightExpression).floatValue()
-      case Mod => this.evalCalcExpression(leftExpression).floatValue() % this.evalCalcExpression(rightExpression).floatValue()
+      case Plus => Option(leftLit.floatValue() + rightLit.floatValue())
+      case Minus => Option(leftLit.floatValue() - rightLit.floatValue())
+      case Mul => Option(leftLit.floatValue() * rightLit.floatValue())
+      case Div => Option(leftLit.floatValue() / rightLit.floatValue())
+      case Mod => Option(leftLit.floatValue() % rightLit.floatValue())
     }
   }
 
-  def evalUnaryExpression(operator: CalcOperator, expression: CalcExpression): Number = {
+  def evalUnaryExpression(operator: CalcOperator, expression: CalcExpression): Option[Number] = {
+    val optExpr = this.evalCalcExpression(expression)
+    if(optExpr.isEmpty) Option.empty
     operator match {
-      case Minus => -this.evalCalcExpression(expression).floatValue()
-      case _ => throw CalcRuntimeError(s"Unknow unary operator $operator")
+      case Minus => Option(-optExpr.get.floatValue())
+      case _ => Option.empty
     }
   }
 
-  def evalCalcExpression(expression: CalcExpression): Number = {
+  def evalCalcExpression(expression: CalcExpression): Option[Number] = {
     expression match {
-      case literal: CalcLiteral => evalLiteral(literal)
+      case literal: CalcLiteral => Option(evalLiteral(literal))
       case FunctionCall(name, args) => evalFunctionCall(name, args)
       case BinaryOperation(leftExpression, operator, rightExpression) => evalBinaryExpression(leftExpression, operator, rightExpression)
       case UnaryOperation(operator, expression) => evalUnaryExpression(operator, expression)
