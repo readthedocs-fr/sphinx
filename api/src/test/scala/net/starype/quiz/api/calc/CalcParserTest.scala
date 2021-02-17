@@ -13,7 +13,7 @@ class CalcParserTest extends FunSuite {
   }
 
   test("parser_should_parse_function_call") {
-    assert(parser.apply(Seq(FunctionId("log"), LeftParen, FloatToken(5.0f), RightParen)) === FunctionCall(ASTFunctionId("log"), List(FloatLit(5.0f))))
+    assert(parser.apply(Seq(FunctionId("log"), OpeningBracket, FloatToken(5.0f), ClosingBracket)) === FunctionCall(ASTFunctionId("log"), List(FloatLit(5.0f))))
   }
 
   test("parser_should_parse_unary_expression") {
@@ -30,7 +30,7 @@ class CalcParserTest extends FunSuite {
   }
 
   test("parser_should_parse_complex_expressions") {
-    assert(parser.apply(Seq(FunctionId("log"), LeftParen, FloatToken(5.0f), RightParen, Plus, IntToken(5), Mul, FloatToken(5.0f))) === BinaryOperation(FunctionCall(ASTFunctionId("log"), List(FloatLit(5.0f))), Plus, BinaryOperation(IntLit(5), Mul, FloatLit(5.0f))))
+    assert(parser.apply(Seq(FunctionId("log"), OpeningBracket, FloatToken(5.0f), ClosingBracket, Plus, IntToken(5), Mul, FloatToken(5.0f))) === BinaryOperation(FunctionCall(ASTFunctionId("log"), List(FloatLit(5.0f))), Plus, BinaryOperation(IntLit(5), Mul, FloatLit(5.0f))))
   }
 
 }

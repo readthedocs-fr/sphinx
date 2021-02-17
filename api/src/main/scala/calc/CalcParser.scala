@@ -14,9 +14,9 @@ class CalcParser extends Parsers {
 
   private def parseLiteral: Parser[CalcLiteral] = parseFloat | parseInteger
 
-  private def parseGrouping: Parser[CalcExpression] = LeftParen ~> parseExpression <~ RightParen
+  private def parseGrouping: Parser[CalcExpression] = OpeningBracket ~> parseExpression <~ ClosingBracket
 
-  private def parseArgs: Parser[List[CalcExpression]] = LeftParen ~> repsep(parseExpression, Comma) <~ RightParen
+  private def parseArgs: Parser[List[CalcExpression]] = OpeningBracket ~> repsep(parseExpression, Comma) <~ ClosingBracket
 
   private def parseFunctionCall: Parser[FunctionCall] = (parseFunctionId ~ parseArgs) ^^ { case identifier ~ args => FunctionCall(identifier, args)}
 

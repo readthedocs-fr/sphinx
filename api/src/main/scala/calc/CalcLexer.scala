@@ -24,8 +24,8 @@ class CalcLexer extends RegexParsers {
   }
 
   private def parseKeyword: Parser[CalcKeyword] = {
-    "(" ^^^ LeftParen |
-    ")" ^^^ RightParen |
+    "(" ^^^ OpeningBracket |
+    ")" ^^^ ClosingBracket |
     "." ^^^ Dot |
     "," ^^^ Comma
   }

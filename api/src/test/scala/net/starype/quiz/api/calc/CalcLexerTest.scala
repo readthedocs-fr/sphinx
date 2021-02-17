@@ -21,13 +21,13 @@ class CalcLexerTest extends FunSuite {
   }
 
   test("lexer_should_parse_keyword") {
-    assert(lexer.apply("(") === List(LeftParen))
-    assert(lexer.apply(")") === List(RightParen))
+    assert(lexer.apply("(") === List(OpeningBracket))
+    assert(lexer.apply(")") === List(ClosingBracket))
     assert(lexer.apply(",") === List(Comma))
   }
 
   test("lexer_should_parse_function_identifier") {
-    assert(lexer.apply("log(5.0)") === List(FunctionId("log"), LeftParen, FloatToken(5.0f), RightParen))
+    assert(lexer.apply("log(5.0)") === List(FunctionId("log"), OpeningBracket, FloatToken(5.0f), ClosingBracket))
   }
 
 }

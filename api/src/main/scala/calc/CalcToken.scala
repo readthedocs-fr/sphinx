@@ -18,5 +18,5 @@ case object Mul extends CalcOperator
 case object Div extends CalcOperator
 case object Mod extends CalcOperator
 case object Dot extends CalcKeyword
-case object LeftParen extends CalcKeyword
-case object RightParen extends CalcKeyword
+case object OpeningBracket extends CalcKeyword
+case object ClosingBracket extends CalcKeyword
